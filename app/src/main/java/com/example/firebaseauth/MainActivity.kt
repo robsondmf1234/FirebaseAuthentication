@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //Obtem a instancia do Firebase
         auth = FirebaseAuth.getInstance()
         auth.signOut()
         setupListeners()
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        checkLoggedInState()
+//        checkLoggedInState()
     }
 
     private fun setupListeners() {
@@ -44,9 +45,9 @@ class MainActivity : AppCompatActivity() {
         if (email.isNotEmpty() && password.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
                 try {
+                    //Chama o método para se autenticar passando (email e password)
                     auth.signInWithEmailAndPassword(email, password).await()
                     withContext(Dispatchers.Main) {
-//                        checkLoggedInState()
                         checkAuthentication()
                     }
                 } catch (exception: Exception) {
@@ -60,10 +61,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkAuthentication() {
+        //Verificar através do objeto currentUser,caso o o objeto currentUser não seja nulo,
+        // o usuario está logado.
         if (auth.currentUser != null) {
             val intent = Intent(this, SecondActivity::class.java)
             startActivity(intent)
-        }else{
+        } else {
             binding.txStatusLog.text = getString(R.string.txtNotAuthenticated)
         }
     }
@@ -74,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         if (email.isNotEmpty() && password.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
                 try {
+                    //Chama o método para se registrar passando (email e password)
                     auth.createUserWithEmailAndPassword(email, password).await()
                     withContext(Dispatchers.Main) {
                         checkLoggedInState()
