@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FirebaseAuth</string>
+    <string name="txtNotLogged">You are not logged in.</string>
+    <string name="txtLogged">"You are logged.</string>
+    <string name="txtNotAuthenticated">"You aren´t logged.</string>
+
+
+</resources>
