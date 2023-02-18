@@ -23,6 +23,7 @@ const val REQUEST_CODE_SIGN_IN = 0
 class GoogleSigninActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGoogleSigninBinding
+    //Instancia do obejto do Firebase, que contem os meotodos resposanveis pela autenticação.
     lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +44,7 @@ class GoogleSigninActivity : AppCompatActivity() {
     private fun initializedAuth() {
 
         val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                //TokenId
             .requestIdToken(getString(R.string.webclient_id))
             .requestEmail()
             .build()
